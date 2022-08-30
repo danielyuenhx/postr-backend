@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const PostModel = require('../models/posts-model.js');
+import PostModel from '../models/posts-model.js';
 
 // callback functions for routing
 export const getPosts = async (req, res) => {
