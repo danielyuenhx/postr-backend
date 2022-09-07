@@ -2,10 +2,11 @@
 import express from 'express';
 
 // callback functions stored in controllers folder
-import { createUser } from '../controllers/users-controllers.js'
+import { createUser, loginUser } from '../controllers/users-controllers.js'
 
 const router = express.Router();
 
-router.post('/', createUser);
+router.post('/createUser', createUser);
+router.post('/signInUser', loginUser);
 
 export default router;

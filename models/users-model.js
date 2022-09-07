@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // create user schema
 const userSchema = mongoose.Schema({
-	username: String,
-	password: String,
+	id: { type: String },
+	username: { type: String, required: true },
+	password: { type: String, required: true },
 	createdAt: {
 		type: Date,
 		default: new Date(),
