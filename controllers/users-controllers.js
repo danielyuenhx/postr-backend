@@ -8,7 +8,6 @@ import UserModel from '../models/users-model.js';
 export const createUser = async (req, res) => {
 	// POST requests need access to request body
 	const { username, password, confirmPassword } = req.body;
-	const newUser = new UserModel(user);
 
 	try {
         // check if user already exists
