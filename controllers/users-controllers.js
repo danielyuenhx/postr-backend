@@ -25,6 +25,7 @@ export const createUser = async (req, res) => {
 		const newUser = await UserModel.create({
 			username,
 			password: hashedPassword,
+            notifications: true,
 		});
 
 		const token = jwt.sign(
