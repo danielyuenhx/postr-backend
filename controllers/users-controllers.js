@@ -25,7 +25,7 @@ export const createUser = async (req, res) => {
 		const newUser = await UserModel.create({
 			username,
 			password: hashedPassword,
-            notifications: true,
+			notifications: true,
 		});
 
 		const token = jwt.sign(
@@ -34,7 +34,13 @@ export const createUser = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		res.status(200).json({ result: newUser, token });
+		res.status(200).json({
+			result: {
+				username: newUser.username,
+				notifications: newUser.notifications,
+			},
+			token,
+		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
 	}
@@ -58,7 +64,10 @@ export const loginUser = async (req, res) => {
 			{ expiresIn: '1h' }
 		);
 
-		res.status(200).json({ result: user, token });
+		res.status(200).json({
+			result: { username, notifications: user.notifications },
+			token,
+		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
 	}
