@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 // create post schema
 const postSchema = mongoose.Schema({
 	user: String,
+    title: String,
 	content: String,
 	tags: [String],
+    selectedFile: String,
 	likeCount: {
 		type: Number,
 		default: 0,
