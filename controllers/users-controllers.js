@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import UserModel from '../models/users-model.js';
+import PostModel from '../models/posts-model.js';
+import { getPosts } from './posts-controllers.js';
 
 // callback functions for routing
 export const createUser = async (req, res) => {
@@ -65,8 +67,39 @@ export const loginUser = async (req, res) => {
 		);
 
 		res.status(200).json({
-			result: { username, id: user._id, notifications: user.notifications },
+			result: {
+				username,
+				id: user._id,
+				createdAt: user.createdAt,
+				notifications: user.notifications,
+			},
 			token,
+		});
+	} catch (error) {
+		res.status(500).json({ message: 'Something went wrong.' });
+	}
+};
+
+export const getUser = async (req, res) => {
+	const { username } = req.params;
+
+	try {
+		// const posts = await PostModel.find();
+
+		// let totalLikes = 0;
+		// for (let i = 0; i < posts.length; i++) {
+		// 	totalLikes += posts[i].likes.length;
+		// }
+
+		const user = await UserModel.findOne({ username });
+		if (!user)
+			return res.status(404).json({ message: 'User does not exist!' });
+
+		res.status(200).json({
+			username,
+			createdAt: user.createdAt,
+			totalLikes: user.totalLikes,
+			totalPosts: user.totalPosts,
 		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });

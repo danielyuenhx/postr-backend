@@ -5,10 +5,18 @@ const userSchema = mongoose.Schema({
 	id: { type: String },
 	username: { type: String, required: true },
 	password: { type: String, required: true },
-    notifications: {type: Boolean },
+	notifications: { type: Boolean },
 	createdAt: {
 		type: Date,
 		default: new Date(),
+	},
+	totalLikes: {
+		type: Number,
+		default: 0,
+	},
+	totalPosts: {
+		type: Number,
+		default: 0,
 	},
 });
 
