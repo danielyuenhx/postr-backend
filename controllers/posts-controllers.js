@@ -16,8 +16,15 @@ export const createPost = async (req, res) => {
 	// POST requests need access to request body
 	const post = req.body;
 
-    // ensure that the post is created by the logged in person
-	if (req.username !== post.user) return res.status(404).json({ message: 'Unauthenticated!' });
+	// ensure that the post is created by the logged in person
+	if (req.username !== post.user)
+		return res.status(404).json({ message: 'Unauthenticated!' });
+
+	// ensure file uploaded is an image
+	if (!post.selectedFile.startsWith('data:image'))
+		return res
+			.status(404)
+			.json({ message: 'File uploaded is not an image.' });
 
 	const newPost = new PostModel(post);
 
@@ -34,8 +41,6 @@ export const deletePost = async (req, res) => {
 	const { id } = req.params;
 
 	if (!req.userId) return res.json({ message: 'Unauthenticated!' });
-    // ensure that the post is deleted by the logged in person
-	if (req.username !== post.user) return res.status(404).json({ message: 'Unauthenticated!' });
 
 	// check if Post with ID exists
 	if (!mongoose.Types.ObjectId.isValid(id))
@@ -74,11 +79,9 @@ export const likePost = async (req, res) => {
 			post.likes = post.likes.filter((id) => id != String(req.userId));
 		}
 
-		const updatedPost = await PostModel.findByIdAndUpdate(
-			id,
-			post,
-			{ new: true }
-		);
+		const updatedPost = await PostModel.findByIdAndUpdate(id, post, {
+			new: true,
+		});
 
 		res.status(200).json(updatedPost);
 	} catch (error) {
