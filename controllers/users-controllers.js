@@ -65,7 +65,7 @@ export const loginUser = async (req, res) => {
 		);
 
 		res.status(200).json({
-			result: { username, notifications: user.notifications },
+			result: { username, id: user._id, notifications: user.notifications },
 			token,
 		});
 	} catch (error) {
