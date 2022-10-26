@@ -72,6 +72,7 @@ export const loginUser = async (req, res) => {
 				id: user._id,
 				createdAt: user.createdAt,
 				notifications: user.notifications,
+        pinnedPost: user.pinnedPost,
 			},
 			token,
 		});
@@ -117,7 +118,14 @@ export const pinPost = async (req, res) => {
 			{ new: true }
 		);
 
-		res.status(200).json(updatedUser);
+		res.status(200).json({
+			result: {
+				username: updatedUser.username,
+				id: updatedUser._id,
+				createdAt: updatedUser.createdAt,
+				notifications: updatedUser.notifications,
+        pinnedPost: updatedUser.pinnedPost,
+			}});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
 	}
