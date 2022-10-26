@@ -100,6 +100,7 @@ export const getUser = async (req, res) => {
 			createdAt: user.createdAt,
 			totalLikes: user.totalLikes,
 			totalPosts: user.totalPosts,
+      pinnedPost: user.pinnedPost,
 		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
