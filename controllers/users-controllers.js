@@ -105,3 +105,19 @@ export const getUser = async (req, res) => {
 		res.status(500).json({ message: 'Something went wrong.' });
 	}
 };
+
+export const pinPost = async (req, res) => {
+	const userId = req.body.userId;
+	const postId = req.body.postId;
+	try {
+		const updatedUser = await UserModel.findByIdAndUpdate(
+			userId,
+			{ pinnedPost: postId },
+			{ new: true }
+		);
+
+		res.status(200).json(updatedUser);
+	} catch (error) {
+		res.status(500).json({ message: 'Something went wrong.' });
+	}
+};
