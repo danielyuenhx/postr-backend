@@ -12,6 +12,9 @@ export const createUser = async (req, res) => {
 	const { username, password, confirmPassword } = req.body;
 
 	try {
+		// check username length
+		if (username.length > 15) return res.status(400).json({ message: 'Username must be less than or equal to 15 characters!' })
+
 		// check if user already exists
 		const existingUser = await UserModel.findOne({ username });
 		if (existingUser)
@@ -72,7 +75,7 @@ export const loginUser = async (req, res) => {
 				id: user._id,
 				createdAt: user.createdAt,
 				notifications: user.notifications,
-        pinnedPost: user.pinnedPost,
+				pinnedPost: user.pinnedPost,
 			},
 			token,
 		});
@@ -101,7 +104,7 @@ export const getUser = async (req, res) => {
 			createdAt: user.createdAt,
 			totalLikes: user.totalLikes,
 			totalPosts: user.totalPosts,
-      pinnedPost: user.pinnedPost,
+			pinnedPost: user.pinnedPost,
 		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
@@ -124,8 +127,9 @@ export const pinPost = async (req, res) => {
 				id: updatedUser._id,
 				createdAt: updatedUser.createdAt,
 				notifications: updatedUser.notifications,
-        pinnedPost: updatedUser.pinnedPost,
-			}});
+				pinnedPost: updatedUser.pinnedPost,
+			}
+		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
 	}
