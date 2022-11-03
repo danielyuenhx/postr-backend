@@ -84,6 +84,25 @@ export const loginUser = async (req, res) => {
 	}
 };
 
+export const deleteUser = async(req, res) => {
+	const { id } = req.params;
+
+	if (!req.userId) return res.json({ message: 'Unauthenticated!' });
+
+	// check if User with username exists
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send('No user with that username.');
+
+	try {
+		// find and delete
+		const deletedUser = await UserModel.findByIdAndRemove(id);
+
+		res.status(200).json({ message: 'User deleted successfully.' });
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};
+
 export const getUser = async (req, res) => {
 	const { username } = req.params;
 
