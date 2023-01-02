@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
 	notifications: { type: Boolean },
 	createdAt: {
 		type: Date,
-		default: new Date(),
+		default: Date.now,
 	},
 	totalLikes: {
 		type: Number,
