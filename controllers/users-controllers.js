@@ -76,6 +76,7 @@ export const loginUser = async (req, res) => {
 				createdAt: user.createdAt,
 				notifications: user.notifications,
 				pinnedPost: user.pinnedPost,
+				picture: user.picture,
 			},
 			token,
 		});
@@ -124,6 +125,31 @@ export const getUser = async (req, res) => {
 			totalLikes: user.totalLikes,
 			totalPosts: user.totalPosts,
 			pinnedPost: user.pinnedPost,
+			picture: user.picture,
+		});
+	} catch (error) {
+		res.status(500).json({ message: 'Something went wrong.' });
+	}
+};
+
+export const updatePicture = async (req, res) => {
+	const userId = req.body.userId;
+	const image = req.body.image;
+
+	if (!userId) return res.json({ message: 'Unauthenticated!' });
+
+	try {
+		const updatedUser = await UserModel.findByIdAndUpdate(
+			userId,
+			{ picture: image },
+			{ new: true }
+		);
+
+		res.status(200).json({
+			result: {
+				id: updatedUser._id,
+				picture: updatedUser.picture,
+			}
 		});
 	} catch (error) {
 		res.status(500).json({ message: 'Something went wrong.' });
@@ -142,10 +168,7 @@ export const pinPost = async (req, res) => {
 
 		res.status(200).json({
 			result: {
-				username: updatedUser.username,
 				id: updatedUser._id,
-				createdAt: updatedUser.createdAt,
-				notifications: updatedUser.notifications,
 				pinnedPost: updatedUser.pinnedPost,
 			}
 		});

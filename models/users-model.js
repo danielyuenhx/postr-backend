@@ -19,6 +19,7 @@ const userSchema = mongoose.Schema({
 		default: 0,
 	},
 	pinnedPost: { type: String, default: '' },
+	picture: { type: String, default: ''},
 });
 
 // schema -> model

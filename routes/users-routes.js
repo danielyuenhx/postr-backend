@@ -8,6 +8,7 @@ import {
   deleteUser,
   getUser,
   pinPost,
+  updatePicture,
 } from "../controllers/users-controllers.js";
 import auth from '../middleware/auth.js'
 
@@ -17,6 +18,7 @@ router.post("/createUser", createUser);
 router.post("/loginUser", loginUser);
 router.delete('/:id', auth, deleteUser);
 router.get("/:username", getUser);
+router.post("/updatePicture", auth, updatePicture);
 router.post("/pinPost", auth, pinPost);
 
 export default router;
