@@ -18,6 +18,7 @@ export const getPosts = async (req, res) => {
     ]);
     const returnedPosts = posts.map((post) => {
       return {
+        _id: post._id,
         content: post.content,
         createdAt: post.createdAt,
         likes: post.likes,
@@ -25,6 +26,7 @@ export const getPosts = async (req, res) => {
         title: post.title,
         user: post.user,
         picture: post.userDetails[0].picture,
+        pinnedPost: post.pinnedPost,
       };
     });
     res.status(200).json(returnedPosts);

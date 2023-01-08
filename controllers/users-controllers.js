@@ -147,7 +147,11 @@ export const updatePicture = async (req, res) => {
 
 		res.status(200).json({
 			result: {
+				username: updatedUser.username,
 				id: updatedUser._id,
+				createdAt: updatedUser.createdAt,
+				notifications: updatedUser.notifications,
+				pinnedPost: updatedUser.pinnedPost,
 				picture: updatedUser.picture,
 			}
 		});
@@ -159,6 +163,7 @@ export const updatePicture = async (req, res) => {
 export const pinPost = async (req, res) => {
 	const userId = req.body.userId;
 	const postId = req.body.postId;
+	
 	try {
 		const updatedUser = await UserModel.findByIdAndUpdate(
 			userId,
@@ -168,8 +173,12 @@ export const pinPost = async (req, res) => {
 
 		res.status(200).json({
 			result: {
+				username: updatedUser.username,
 				id: updatedUser._id,
+				createdAt: updatedUser.createdAt,
+				notifications: updatedUser.notifications,
 				pinnedPost: updatedUser.pinnedPost,
+				picture: updatedUser.picture,
 			}
 		});
 	} catch (error) {
