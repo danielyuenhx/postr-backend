@@ -69,7 +69,10 @@ export const createPost = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.params;
 
-  if (!req.userId) return res.json({ message: 'Unauthenticated!' });
+  const user = await UserModel.findById(req.userId);
+  const post = await PostModel.findById(id);
+
+  if (user._id !== post._id) return res.json({ message: 'Unauthenticated!' });
 
   // check if Post with ID exists
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -79,7 +82,6 @@ export const deletePost = async (req, res) => {
     // find and delete
     const deletedPost = await PostModel.findByIdAndRemove(id);
 
-    const user = await UserModel.findById(req.userId);
     await UserModel.findByIdAndUpdate(
       req.userId,
       {
