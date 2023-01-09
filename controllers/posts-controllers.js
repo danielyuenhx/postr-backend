@@ -72,7 +72,7 @@ export const deletePost = async (req, res) => {
   const user = await UserModel.findById(req.userId);
   const post = await PostModel.findById(id);
 
-  if (user._id !== post._id) return res.json({ message: 'Unauthenticated!' });
+  if (user.username !== post.user) return res.json({ message: 'Unauthenticated!' });
 
   // check if Post with ID exists
   if (!mongoose.Types.ObjectId.isValid(id))
